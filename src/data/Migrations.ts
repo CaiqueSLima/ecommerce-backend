@@ -9,7 +9,7 @@ abstract class Migrations extends BaseDatabase {
                     id INT PRIMARY KEY,
                     name VARCHAR(255) NOT NULL,
                     price DOUBLE(10,2) NOT NULL,
-                    qty_stock = INT NOT NULL
+                    qty_stock INT NOT NULL
                 );
 
             CREATE TABLE IF NOT EXISTS shopper_orders (
@@ -19,7 +19,7 @@ abstract class Migrations extends BaseDatabase {
                     delivery_date DATE NOT NULL
                 );
             
-            CREATE TABLE IF NOT EXISTS shopper_order's_products (
+            CREATE TABLE IF NOT EXISTS shopper_orders_products (
                     order_id VARCHAR(255) NOT NULL,
                     product_id INT NOT NULL,
                     quantity INT NOT NULL,
