@@ -31,7 +31,9 @@ abstract class Migrations extends BaseDatabase {
             console.log('Tabelas criadas')
 
             const products = await CsvToJson.convertFile("./src/data/products_ascii.csv")
-
+            
+            // This validation map is necessary because some products have commas on their names,
+            // confusing the conversion from csv file format, which creates extra object keys called field5 and field6
             const finalProducts = products.map((product: any) => {
                 if (product.field6) {
                     return {
