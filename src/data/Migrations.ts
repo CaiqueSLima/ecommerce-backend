@@ -32,9 +32,29 @@ abstract class Migrations extends BaseDatabase {
 
             const products = await CsvToJson.convertFile("./src/data/products_ascii.csv")
 
-            await BaseDatabase.connection('shopper_stock').insert(products)
+            const finalProducts = products.map((product: any) => {
+                if (product.field6) {
+                    return {
+                        id: product.id,
+                        name: `${product.name},${product.price},${product.qty_stock}`,
+                        price: product.field5,
+                        qty_stock: product.field6
+                    }
+                } else if (product.field5) {
+                    return {
+                        id: product.id,
+                        name: `${product.name},${product.price}`,
+                        price: product.qty_stock,
+                        qty_stock: product.field5 
+                    }
+                } else {
+                    return product
+                }
+            })
 
-            console.log('Produtos inseridos')
+            await BaseDatabase.connection('shopper_stock').insert(finalProducts)
+
+            console.log('Produtos inseridos no banco de dados')
 
         } catch (error) {
             console.log(error)
