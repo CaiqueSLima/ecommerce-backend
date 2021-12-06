@@ -1,4 +1,7 @@
-import { Product } from "./Product"
+export interface OrdersProducts {
+    id: number
+    quantity: number
+}
 
 export class Order {
     constructor(
@@ -6,7 +9,7 @@ export class Order {
         private costumerName: string,
         private deliveryDate: string,
         private totalPrice: number,
-        private products: Product[]
+        private products: OrdersProducts[]
     ) { }
 
     public getId = () => this.id
