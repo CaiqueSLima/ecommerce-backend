@@ -12,14 +12,12 @@ export class ProductBusiness {
 
         const result = await this.productsDatabase.getStock()
 
-        const productsOutput: Product[] = result.map(product => {
-            return {
-                id: product.id,
-                name: product.name,
-                price: product.price,
-                qtyStock: product.qty_stock
-            }
-        })
+        const productsOutput: Product[] = result.map(product => new Product(
+            product.id,
+            product.name,
+            product.price,
+            product.qty_stock
+        ))
 
         return productsOutput
     }
