@@ -1,15 +1,20 @@
 import { Order } from "../models/Order"
-import { Product } from "../models/Product"
 import { BaseDatabase } from "./BaseDatabase"
+
+export interface ProductData {
+    id: number
+    name: string
+    price: number
+    qty_stock: number
+}
 
 export class ProductsDatabase extends BaseDatabase {
 
     private static TABLE_NAME = 'shopper_stock'
 
-    public async getStock(): Promise<Product[]> {
+    public async getStock(): Promise<ProductData[]> {
 
         return await BaseDatabase.connection(ProductsDatabase.TABLE_NAME).select()
-
     }
 
     public async updateStock(order: Order): Promise<void> {
@@ -23,6 +28,5 @@ export class ProductsDatabase extends BaseDatabase {
                 .where({ id: product.id })
                 .decrement('qty_stock', product.quantity)
         }
-
     }
 }
