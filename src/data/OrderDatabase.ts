@@ -1,5 +1,4 @@
 import { Order } from "../models/Order"
-import { Product } from "../models/Product"
 import { BaseDatabase } from "./BaseDatabase"
 
 export interface OrderData {
