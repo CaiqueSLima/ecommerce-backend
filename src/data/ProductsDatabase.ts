@@ -1,5 +1,5 @@
 import { DbAccessError } from "../errors/DbAccessError"
-import { Order, OrdersProducts } from "../models/Order"
+import { OrdersProducts } from "../models/Order"
 import { BaseDatabase } from "./BaseDatabase"
 
 export interface ProductData {

@@ -1,6 +1,5 @@
 import { OrderOutputDTO } from "../business/OrderBusiness"
 import { DbAccessError } from "../errors/DbAccessError"
-import { Order } from "../models/Order"
 import { BaseDatabase } from "./BaseDatabase"
 
 export interface OrdersProductsToDB {

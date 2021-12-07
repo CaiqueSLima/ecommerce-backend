@@ -1,4 +1,3 @@
-import { CustomError } from "../errors/CustomError"
 import { Product } from "../models/Product"
 import { ProductsDatabase } from "../data/ProductsDatabase"
 

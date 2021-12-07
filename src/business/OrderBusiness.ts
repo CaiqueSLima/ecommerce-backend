@@ -37,7 +37,7 @@ export class OrderBusiness {
 
         const id = this.idGenerator.generateId()
 
-        const newOrder = new Order(id, costumerName, deliveryDate, products)
+        const newOrder = Order.toOrderModel(id, costumerName, deliveryDate, products)
 
         const productsInStock = await this.productsDatabase.getProductsFromOrder(newOrder.getProducts())
 
