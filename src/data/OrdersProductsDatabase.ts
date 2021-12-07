@@ -1,3 +1,4 @@
+import { OrderOutputDTO } from "../business/OrderBusiness"
 import { DbAccessError } from "../errors/DbAccessError"
 import { Order } from "../models/Order"
 import { BaseDatabase } from "./BaseDatabase"
@@ -12,16 +13,16 @@ export class OrdersProductsDatabase extends BaseDatabase {
 
     private static TABLE_NAME = 'shopper_orders_products'
 
-    public async createProductList(order: Order): Promise<void> {
+    public async createProductList(order: OrderOutputDTO): Promise<void> {
 
         try {
 
-            const products = order.getProducts()
+            const products = order.products
 
             const productsToDB = products.map(product => {
 
                 const productToDB: OrdersProductsToDB = {
-                    order_id: order.getId(),
+                    order_id: order.id,
                     product_id: product.id,
                     quantity: product.quantity
                 }

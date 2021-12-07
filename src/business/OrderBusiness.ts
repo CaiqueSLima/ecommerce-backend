@@ -8,7 +8,13 @@ import { IdGenerator } from "../services/IdGenerator"
 export interface OrderInputDTO {
     costumerName: string
     deliveryDate: string
-    totalPrice: number
+    products: OrdersProducts[]
+}
+
+export interface OrderOutputDTO {
+    id: string
+    costumerName: string
+    deliveryDate: string
     products: OrdersProducts[]
 }
 
@@ -23,17 +29,17 @@ export class OrderBusiness {
 
     public async createOrder(order: OrderInputDTO): Promise<void> {
 
-        const { costumerName, deliveryDate, totalPrice, products } = order
+        const { costumerName, deliveryDate, products } = order
 
-        if (!costumerName || !deliveryDate || !totalPrice|| !products.length) {
+        if (!costumerName || !deliveryDate || !products.length) {
             throw new CustomError('Parâmetros Inválidos')
         }
 
         const id = this.idGenerator.generateId()
 
-        const newOrder = new Order(id, costumerName, deliveryDate, totalPrice, products)
+        const newOrder = new Order(id, costumerName, deliveryDate, products)
 
-        const productsInStock = await this.productsDatabase.getProductsFromOrder(newOrder)
+        const productsInStock = await this.productsDatabase.getProductsFromOrder(newOrder.getProducts())
 
         for (let product of products) {
             
@@ -44,8 +50,15 @@ export class OrderBusiness {
             }
         }
 
-        await this.orderDatabase.createOrder(newOrder)
-        await this.ordersProductsDatabase.createProductList(newOrder)
-        await this.productsDatabase.updateStock(newOrder)
+        const newOrderToDBs: OrderOutputDTO = {
+            id: newOrder.getId(),
+            costumerName: newOrder.getCostumerName(),
+            deliveryDate: newOrder.getDeliveryDate(),
+            products: newOrder.getProducts()
+        }
+
+        await this.orderDatabase.createOrder(newOrderToDBs)
+        await this.ordersProductsDatabase.createProductList(newOrderToDBs)
+        await this.productsDatabase.updateStockAfterOrder(newOrder.getProducts())
     }
 }

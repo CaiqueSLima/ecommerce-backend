@@ -1,5 +1,5 @@
 import { DbAccessError } from "../errors/DbAccessError"
-import { Order } from "../models/Order"
+import { Order, OrdersProducts } from "../models/Order"
 import { BaseDatabase } from "./BaseDatabase"
 
 export interface ProductData {
@@ -17,7 +17,7 @@ export class ProductsDatabase extends BaseDatabase {
 
         try {
 
-            return await BaseDatabase.connection(ProductsDatabase.TABLE_NAME).select()
+            return await BaseDatabase.connection(ProductsDatabase.TABLE_NAME).where('qty_stock', '>', '0').select()
 
         } catch (error: any) {
 
@@ -25,11 +25,9 @@ export class ProductsDatabase extends BaseDatabase {
         }
     }
 
-    public async updateStock(order: Order): Promise<void> {
+    public async updateStockAfterOrder(products: OrdersProducts[]): Promise<void> {
 
         try {
-
-            const products = order.getProducts()
 
             for (let product of products) {
 
@@ -45,11 +43,9 @@ export class ProductsDatabase extends BaseDatabase {
         }
     }
 
-    public async getProductsFromOrder(order: Order): Promise<ProductData[] | undefined> {
+    public async getProductsFromOrder(products: OrdersProducts[]): Promise<ProductData[] | undefined> {
 
         try {
-            
-            const products = order.getProducts()
 
             let ids: number[] = []
 

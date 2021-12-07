@@ -1,3 +1,4 @@
+import { OrderOutputDTO } from "../business/OrderBusiness"
 import { DbAccessError } from "../errors/DbAccessError"
 import { Order } from "../models/Order"
 import { BaseDatabase } from "./BaseDatabase"
@@ -5,26 +6,18 @@ import { BaseDatabase } from "./BaseDatabase"
 export interface OrderData {
     id: string,
     costumer_name: string,
-    delivery_date: string,
-    total_price: number
+    delivery_date: string
 }
 
 export class OrderDatabase extends BaseDatabase {
 
     private static TABLE_NAME = 'shopper_orders'
 
-    public async createOrder(order: Order): Promise<void> {
+    public async createOrder(order: OrderOutputDTO): Promise<void> {
 
         try {
-
-            const orderToDB: OrderData = {
-                id: order.getId(),
-                costumer_name: order.getCostumerName(),
-                delivery_date: order.getDeliveryDate(),
-                total_price: order.getTotalPrice()
-            }
     
-            await BaseDatabase.connection(OrderDatabase.TABLE_NAME).insert(orderToDB)
+            await BaseDatabase.connection(OrderDatabase.TABLE_NAME).insert(order)
             
         } catch (error: any) {
             

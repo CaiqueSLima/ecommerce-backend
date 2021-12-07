@@ -10,7 +10,7 @@ export class ProductBusiness {
 
     public async getProductsFromStock(): Promise<Product[]> {
 
-        const result = await this.productsDatabase.getStock()
+        const result = await this.productsDatabase.getProductsFromStock()
 
         const productsOutput: Product[] = result.map(product => new Product(
             product.id,
