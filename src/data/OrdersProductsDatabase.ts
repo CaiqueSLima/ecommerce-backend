@@ -1,3 +1,4 @@
+import { DbAccessError } from "../errors/DbAccessError"
 import { Order } from "../models/Order"
 import { BaseDatabase } from "./BaseDatabase"
 
@@ -13,18 +14,26 @@ export class OrdersProductsDatabase extends BaseDatabase {
 
     public async createProductList(order: Order): Promise<void> {
 
-        const products = order.getProducts()
+        try {
 
-        for (let product of products) {
+            const products = order.getProducts()
 
-            const productToDB: OrdersProductsToDB = {
-                order_id: order.getId(),
-                product_id: product.id,
-                quantity: product.quantity
-            }
+            const productsToDB = products.map(product => {
 
-            await BaseDatabase.connection(OrdersProductsDatabase.TABLE_NAME).insert(productToDB)
+                const productToDB: OrdersProductsToDB = {
+                    order_id: order.getId(),
+                    product_id: product.id,
+                    quantity: product.quantity
+                }
+
+                return productToDB
+            })
+
+            await BaseDatabase.connection(OrdersProductsDatabase.TABLE_NAME).insert(productsToDB)
+
+        } catch (error: any) {
+
+            throw new DbAccessError(error.message)
         }
     }
-
 }

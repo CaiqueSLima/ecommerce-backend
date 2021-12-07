@@ -1,4 +1,4 @@
-import { CsvToJson } from "../services/CSVToJSON"
+import { CsvToJson } from "../services/CsvToJson"
 import { BaseDatabase } from "./BaseDatabase"
 
 abstract class Migrations extends BaseDatabase {

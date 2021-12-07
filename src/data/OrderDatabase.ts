@@ -1,3 +1,4 @@
+import { DbAccessError } from "../errors/DbAccessError"
 import { Order } from "../models/Order"
 import { BaseDatabase } from "./BaseDatabase"
 
@@ -14,13 +15,20 @@ export class OrderDatabase extends BaseDatabase {
 
     public async createOrder(order: Order): Promise<void> {
 
-        const orderToDB: OrderData = {
-            id: order.getId(),
-            costumer_name: order.getCostumerName(),
-            delivery_date: order.getDeliveryDate(),
-            total_price: order.getTotalPrice()
-        }
+        try {
 
-        await BaseDatabase.connection(OrderDatabase.TABLE_NAME).insert(orderToDB)
+            const orderToDB: OrderData = {
+                id: order.getId(),
+                costumer_name: order.getCostumerName(),
+                delivery_date: order.getDeliveryDate(),
+                total_price: order.getTotalPrice()
+            }
+    
+            await BaseDatabase.connection(OrderDatabase.TABLE_NAME).insert(orderToDB)
+            
+        } catch (error: any) {
+            
+            throw new DbAccessError(error.message)
+        }        
     }
 }
