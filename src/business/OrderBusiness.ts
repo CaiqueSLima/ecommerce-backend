@@ -46,7 +46,7 @@ export class OrderBusiness {
             const match = productsInStock?.find(productInStock => product.id === productInStock.id)
 
             if (match && match.qty_stock < product.quantity) {
-                throw new CustomError(`${match.name} não possui estoque suficiente`)
+                throw new CustomError(`${match.name} não possui estoque suficiente. Pedido máximo de: ${match.qty_stock} unidades`)
             }
         }
 

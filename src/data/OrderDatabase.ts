@@ -15,8 +15,14 @@ export class OrderDatabase extends BaseDatabase {
     public async createOrder(order: OrderOutputDTO): Promise<void> {
 
         try {
+
+            const orderToDB: OrderData = {
+                id: order.id,
+                costumer_name: order.costumerName,
+                delivery_date: order.deliveryDate
+            }
     
-            await BaseDatabase.connection(OrderDatabase.TABLE_NAME).insert(order)
+            await BaseDatabase.connection(OrderDatabase.TABLE_NAME).insert(orderToDB)
             
         } catch (error: any) {
             

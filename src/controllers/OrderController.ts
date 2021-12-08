@@ -29,7 +29,7 @@ export class OrderController {
             res.status(200).send('Pedido criado com sucesso!')
 
         } catch (error: any) {
-            res.status(error.statusCode).send(error.message)
+            res.status(error.statusCode).send({ message: error.message })
         }
 
     }

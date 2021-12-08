@@ -14,7 +14,7 @@ abstract class Migrations extends BaseDatabase {
 
             CREATE TABLE IF NOT EXISTS shopper_orders (
                     id VARCHAR(255) PRIMARY KEY,
-                    customer_name VARCHAR(255) NOT NULL,
+                    costumer_name VARCHAR(255) NOT NULL,
                     delivery_date DATE NOT NULL
                 );
             
