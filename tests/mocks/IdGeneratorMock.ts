@@ -1,5 +1,5 @@
 export class IdGeneratorMock {
-    public generate(): string {
+    public generateId(): string {
         return 'id_mock'
     }
 }
