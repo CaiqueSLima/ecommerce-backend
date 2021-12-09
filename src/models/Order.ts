@@ -20,13 +20,8 @@ export class Order {
 
     public static checkDate(date: string): string {
 
-        const day = date.split('/')[0]
-        const month = date.split('/')[1]
-        const year = date.split('/')[2]
-        const formattedDate = year + '-' + ('0' + month).slice(-2) + '-' + ('0' + day).slice(-2)
-
         const today = new Date()
-        const deliveryDate = new Date(formattedDate)
+        const deliveryDate = new Date(date)
 
         function addDays(date: Date, days: number): Date {
             let result = date
@@ -38,7 +33,7 @@ export class Order {
             throw new CustomError('Data de entrega deve ser pelo menos 3 dias após o pedido')
         }
 
-        return formattedDate
+        return date
     }
 
     public static toOrderModel(
