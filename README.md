@@ -34,7 +34,7 @@ npm start
 
  ### Get Products from stock
   * Method: GET
-  * Path: `/products`
+  * Path: `https://case-shopper.herokuapp.com/products`
   * Response: (Return only products with more than 0 stock)
   ```
   {
@@ -52,7 +52,7 @@ npm start
 
 ### Create Order
   * Method: POST
-  * Path: `/orders/create`
+  * Path: `https://case-shopper.herokuapp.com/orders/create`
   * Body: (All fields are mandatory)
   ```
   {
