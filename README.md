@@ -52,7 +52,7 @@ npm start
 
 ### Create Order
   * Method: POST
-  * Path: `/order/create`
+  * Path: `/orders/create`
   * Body: (All fields are mandatory)
   ```
   {
