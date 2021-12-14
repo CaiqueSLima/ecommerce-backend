@@ -31,8 +31,16 @@ export class OrderBusiness {
 
         const { costumerName, deliveryDate, products } = order
 
-        if (!costumerName || !deliveryDate || !products.length) {
-            throw new CustomError('Parâmetros Inválidos')
+        if (!costumerName) {
+            throw new CustomError('Favor inserir o nome do cliente')
+        }
+        
+        if (!deliveryDate) {
+            throw new CustomError('Favor inserir uma data de entrega')
+        }
+        
+        if (!products.length) {
+            throw new CustomError('Favor inserir ao menos um produto no carrinho para completar o pedido')
         }
 
         const id = this.idGenerator.generateId()
