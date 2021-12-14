@@ -21,18 +21,29 @@ describe('Unit tests for Order Business', () => {
             await orderBusiness.createOrder(input)
         } catch (error: any) {
             expect(error.statusCode).toBe(400)
-            expect(error.message).toEqual('Parâmetros Inválidos')
+            expect(error.message).toEqual('Favor inserir o nome do cliente')
         }
     })
-
-    test('Testing creating order with a missing products, should return an error', async () => {
+    
+    test('Testing creating order with a missing delivery date, should return an error', async () => {
+        const input = { ...mockOrderInput, deliveryDate: '' }
+        expect.assertions(2)
+        try {
+            await orderBusiness.createOrder(input)
+        } catch (error: any) {
+            expect(error.statusCode).toBe(400)
+            expect(error.message).toEqual('Favor inserir uma data de entrega')
+        }
+    })
+    
+    test('Testing creating order with missing products, should return an error', async () => {
         const input = { ...mockOrderInput, products: [] }
         expect.assertions(2)
         try {
             await orderBusiness.createOrder(input)
         } catch (error: any) {
             expect(error.statusCode).toBe(400)
-            expect(error.message).toEqual('Parâmetros Inválidos')
+            expect(error.message).toEqual('Favor inserir ao menos um produto no carrinho para completar o pedido')
         }
     })
 
