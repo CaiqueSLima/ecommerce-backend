@@ -1,4 +1,4 @@
-# Shopper Backend
+# Ecommerce Backend
 
 ## Install
 
